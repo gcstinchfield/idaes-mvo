@@ -4,8 +4,6 @@ This Python repository contains generalized optimization formulations (written i
 
 Please reference the paper for this software package as:
 
-::
-
      @article{stinchfield2025mixed,
                 title={Mixed-Integer Linear Programming Formulation with Embedded Machine Learning Surrogates for the Design of Chemical Process Families},
                 author={Stinchfield, Georgia and Khalife, Natali and Ammari, Bashar L and Morgan, Joshua C and Zamarripa, Miguel and Laird, Carl D},
@@ -54,7 +52,7 @@ _See the surrogates.py file in the examples directory_
 
 1. G. Stinchfield, J.C Morgan, S. Naik, L.T. Biegler, J.C. Eslick, C. Jacobson, D.C. Miller, J.D. Siirola, M.A. Zamarripa, C. Zhang, Q. Zhang, C.D. Laird, “A Mixed Integer Linear Programming Approach for the Design of Chemical Process Families”. Computers & Chemical Engineering (2024): 108620.
 
-2. G. Stinchfield, N. Kahlife, B. Ammari, J.C. Morgan, M. Zamarripa, C.D. Laird, “Embedding Machine Learning Surrogates into a Mixed Integer Optimization Formulation to Design Chemical Process Families”, In review at Industrial & Engineering Chemistry ACS.
+2. G. Stinchfield, N. Khalife, B.L. Ammari, J.C. Morgan, M. Zamarripa, C.D. Laird, "Mixed-Integer Linear Programming Formulation with Embedded Machine Learning Surrogates for the Design of Chemical Process Families". Industrial & Engineering Chemistry Research (2025).
 
 3. G. Stinchfield, J.P. Watson, C.D. Laird, “Progressive Hedging Decomposition for Solutions of Large-Scale Process Family Design Problems”. In proceedings, joint conference of the 34th Annual European Symposium on Computer-Aided Process Engineering (ESCAPE) and Process Systems Engineering (PSE) 2024.
 
