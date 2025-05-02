@@ -2,6 +2,18 @@
 
 This Python repository contains generalized optimization formulations (written in the Algebraic Modeling Language [Pyomo](https://github.com/Pyomo/pyomo)) to solve process family design problems. The methodology has been combined into a Python package for ease of use. This problem can be solved in various ways – currently, in this repository, we can solve this problem using a discretization method or embedded machine-learning surrogates. 
 
+Please reference the paper for this software package as:
+
+::
+
+     @article{stinchfield2025mixed,
+                title={Mixed-Integer Linear Programming Formulation with Embedded Machine Learning Surrogates for the Design of Chemical Process Families},
+                author={Stinchfield, Georgia and Khalife, Natali and Ammari, Bashar L and Morgan, Joshua C and Zamarripa, Miguel and Laird, Carl D},
+                journal={Industrial \& Engineering Chemistry Research},
+                year={2025},
+                publisher={ACS Publications}
+            }
+     
 ## Problem Statement
 
 Process systems is a broad term that captures a variety of systems based on chemical and mechanical processes. Some are small and relatively simple, like air conditioning units, while others are vast and complex, like a power plant. Traditionally, process systems engineers focus on optimizing the complex, nonlinear equations that govern the physics of these systems to find ideal operating conditions and schedules and overall designs of the systems to minimize expenses while meeting customers’ and company requirements.
