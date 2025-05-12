@@ -1,6 +1,4 @@
 """
-Georgia Stinchfield, Aug. 2023
-
 This is the parent class for all other ProcessFamily types.
 It organizes the specified data into the necessary sets used across the different process family design optimizations.
 """
@@ -34,8 +32,6 @@ class ProcessFamilyBase:
                         column name corresponding to True/False feasibility data
                     params.annualized_cost_column : str
                         column name corresponding to the total annualized cost of each boundary condition & unit
-        Attributes:
-            TBD
         Returns: 
             None.
         """
@@ -309,6 +305,8 @@ class ProcessFamilyBase:
             csv_pathstring : str, optional
                 Path location (string) to where to write the csv file 
                 by default None
+        Returns:
+            None
         """
         # check that the model has been solved.
         try:
@@ -411,6 +409,8 @@ class ProcessFamilyBase:
                 column names corresponding to the capital cost columns of data for each unit module type
                 each key must be a c in C, and the corresponding (str) element should be the column name corresponding to that
                 c's capital cost
+        Returns:
+            None
         """
         self.c_cap_cl={}
         for c in self.C:
@@ -489,6 +489,7 @@ class ProcessFamilyBase:
         Also calcualtes the total discount off of the undiscounted cost, attributed
         to economies of numbers correlation savings.
 
+        Args:
             alpha : float between 0,1
                 the market "elasticity" parameters; fractional, between 0,1
             DF_max : float between 0,1
@@ -498,6 +499,13 @@ class ProcessFamilyBase:
                 For each possible unit module design for each of the common unit module types, there is a 
                 key in the dict that will return the (int) value of the num. of times it was selected
                 for manufacture, according to the solution.
+        Returns:
+            c_cap_cl_discounted : dict
+                keys are (c,l), values are the discounted unit module design cost
+            total_discount : float
+                total valuation of the discount across all designs
+            total_unit_capex : float
+                total valuation of the capital cost
         """
         
         # new dict for all of the discounted unit module designs
@@ -549,6 +557,8 @@ class ProcessFamilyBase:
             csv_pathstring : str, optional
                 Path location (string) to where to write the csv file 
                 by default None
+        Returns:
+            None
         """
 
         # get the num. of times each unit type was manufactured

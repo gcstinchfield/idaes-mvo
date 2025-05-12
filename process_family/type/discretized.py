@@ -1,13 +1,10 @@
 """
-Georgia Stinchfield, Aug. 2023
-
 This is the discretized formulation class, which is a child of the base class ProcessFamilyBase.
 It builds the equivalent Pyomo model for the discretized formulation of the process family design problem.
 
-See: G. Stinchfield, et. al, “A Mixed Integer Linear Programming Approach 
-     for the Design of Chemical Process Families”. Submitted to 
-     Computers and Chemical Engineering, FOCAPO/CPC23 Special Edition.
-
+See:    Stinchfield, Georgia, et al. 
+        "A mixed integer linear programming approach for the design of chemical process families." 
+        Computers & Chemical Engineering 183 (2024): 108620.
 """
 
 import pyomo.environ as pyo

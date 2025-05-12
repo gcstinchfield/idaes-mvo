@@ -1,9 +1,11 @@
 """
-Georgia Stinchfield, Aug. 2023
-
 This is the surrogates formulation class, which is a child of the base class ProcessFamilyBase.
 It builds the equivalent Pyomo model for the surrogates driven formulation of the process family design problem.
 
+See:    Stinchfield, Georgia, et al. 
+        "Mixed-Integer Linear Programming Formulation with Embedded Machine Learning Surrogates 
+        for the Design of Chemical Process Families." 
+        Industrial & Engineering Chemistry Research (2025).
 """
 
 import pyomo.environ as pyo
@@ -38,7 +40,6 @@ except:
     print("No onnx import.")
     onnx = None
 
-import csv
 from process_family.type.base import ProcessFamilyBase
 
 class SurrogatesProcessFamily(ProcessFamilyBase):
@@ -361,8 +362,6 @@ class SurrogatesProcessFamily(ProcessFamilyBase):
 
         # create disjuncts; we have |L_c| x |C| num. of disjuncts per each variant, v
         # if a particular disjunct is selected, then variant v will have unit design l for common unit type c
-        # model.d_vc.display()
-        # quit()
         def unit_module_c_design_l_disjunct(disjunct,*args):
 
             # extract *args
