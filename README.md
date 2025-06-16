@@ -4,7 +4,19 @@ This Python repository contains generalized optimization formulations (written i
 
 Please reference the paper for this software package as:
 
-     @article{stinchfield2025mixed,
+    @article{stinchfield2024mixed,
+                title={A mixed integer linear programming approach for the design of chemical process families},
+                author={Stinchfield, Georgia and Morgan, Joshua C and Naik, Sakshi and Biegler, Lorenz T and Eslick, John C and Jacobson, Clas and Miller, David C and Siirola, John D and Zamarripa, Miguel and Zhang, Chen and others},
+                journal={Computers \& Chemical Engineering},
+                volume={183},
+                pages={108620},
+                year={2024},
+                publisher={Elsevier}
+            }
+
+Please consider also citing the following paper if using the ML surrogates portion of this work:
+
+    @article{stinchfield2025mixed,
                 title={Mixed-Integer Linear Programming Formulation with Embedded Machine Learning Surrogates for the Design of Chemical Process Families},
                 author={Stinchfield, Georgia and Khalife, Natali and Ammari, Bashar L and Morgan, Joshua C and Zamarripa, Miguel and Laird, Carl D},
                 journal={Industrial \& Engineering Chemistry Research},
