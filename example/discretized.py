@@ -45,13 +45,6 @@ if __name__=="__main__":
                                                 "Compressor Design Flow": range(2) 
                                             }
     
-    # individual unit module design cost data
-    params.unit_module_capex_columns = {
-                                        "Evaporator Area": 'Annualized Capital Evaporator Cost',
-                                        "Condenser Area": 'Annualized Capital Condenser Cost',
-                                        "Compressor Design Flow": 'Annualized Capital Compressor Cost'
-                                        }
-    
     params.process_variant_column_names = ["Capacity (tons)", 
                                             "Max. Outside Air Temperature (deg. C)"]
     params.common_module_type_column_names = ["Evap. Area ($m^2$)",
@@ -74,9 +67,3 @@ if __name__=="__main__":
     # create results summary, store in results_pathstring
     dpfd.results_summary(directory = \
                          os.path.join(params.results_dir, "discretized-results.txt"))
-
-    # economies of numbers analysis - optional post-processing
-    dpfd.eon_summary(directory = os.path.join(params.results_dir, "discretized-eon-stats.txt"),
-                    alpha = 0.8,
-                    DF_max = 0.7,
-                    unit_module_capex_columns = params.unit_module_capex_columns)

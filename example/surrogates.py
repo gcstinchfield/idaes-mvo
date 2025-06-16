@@ -58,7 +58,7 @@ if __name__=="__main__":
     params.common_module_type_column_names = ["Evap. Area ($m^2$)",
                                             "Cond. Area ($m^2$)",
                                             "Compr. Flow (mol./s)"]
-    params.make_results_dir("discretized")
+    params.make_results_dir("surrogates")
 
     # grab paths to surrogates
     cwd = os.getcwd()
