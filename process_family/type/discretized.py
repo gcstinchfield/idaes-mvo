@@ -15,20 +15,20 @@ class DiscretizedProcessFamily(ProcessFamilyBase):
     def __init__(self, params):
         """
         Args:
-            csv_filepath : str
-                location of csv file containing the data
-            process_variant_columns : list of str
-                list of column names corresponding to the variables that define the boundary conditions for the 
-                process variants
-            common_unit_types_column : list of str
-                list of column names coresponding to the common modules in the process platform.
-            feasibility_column: str
-                column name corresponding to True/False feasibility data
-            annualized_cost_column : str
-                column name corresponding to the total annualized cost of each boundary condition & unit
-            num_common_unit_type_designs : dict
-                the keys will correspond (*exactly) to each of the elements in the common_unit_types_column
-                each corresponding entry will be an int, representing the max. num of designs allowed for that unit module type
+            params : <class Parameters>
+                A fully initialized Parameters class object that must have following attrs:
+
+                    params.csv_filepath : str
+                        location of csv file containing the data
+                    params.process_variant_columns : list of str
+                        list of column names corresponding to the variables that define the boundary conditions for the 
+                        process variants
+                    params.common_unit_types_column : list of str
+                        list of column names coresponding to the common modules in the process platform.
+                    params.feasibility_column: str
+                        column name corresponding to True/False feasibility data
+                    params.annualized_cost_column : str
+                        column name corresponding to the total annualized cost of each boundary condition & unit
         Returns: 
             None.
         """

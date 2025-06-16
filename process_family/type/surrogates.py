@@ -54,47 +54,50 @@ class SurrogatesProcessFamily(ProcessFamilyBase):
         Add the classification / regression surrogates attributes.
 
         Args:
-            csv_filepath : str
-                location of csv file containing the data
-            process_variant_columns : list of str
-                list of column names corresponding to the variables that define the boundary conditions for the 
-                process variants
-            common_unit_types_column : list of str
-                list of column names coresponding to the common modules in the process platform.
-            feasibility_column: str
-                column name corresponding to True/False feasibility data
-            annualized_cost_column : str
-                column name corresponding to the total annualized cost of each boundary condition & unit
+            params : <class Parameters>
+                A fully initialized Parameters class object that must have following attrs:
 
-            classification_surrogate : keras.engine.sequential.Sequential
-                trained neural network for predicting the indicator variable.
-            classification_scaling : dict
-                scaled_input_bounds (str) : dict
-                    scaled range for each input neuron in classification_surrogate
-                offset_inputs (str) : list of float
-                    min. data value for each input neuron in classification_surrogate
-                factor_inputs (str) : list of float
-                    max. data value for each input neuron in classification_surrogate
-                offset_outputs (str) : list of float
-                    min. data value for each output neuron in classification_surrogate
-                factor_outputs (str) : list of float
-                    max. data vluae for each output neuron in classification_surrogate
-            classification_threshold : float
-                value for which the output of the classification neural net must be at min.
+                    params.csv_filepath : str
+                        location of csv file containing the data
+                    params.process_variant_columns : list of str
+                        list of column names corresponding to the variables that define the boundary conditions for the 
+                        process variants
+                    params.common_unit_types_column : list of str
+                        list of column names coresponding to the common modules in the process platform.
+                    params.feasibility_column: str
+                        column name corresponding to True/False feasibility data
+                    params.annualized_cost_column : str
+                        column name corresponding to the total annualized cost of each boundary condition & unit
 
-            regression_surrogate : keras.engine.sequential.Sequential
-                trained neural network for predicting the cost variable.
-            regression_scaling : dict
-                scaled_input_bounds (str) : dict
-                    scaled range for each input neuron in regression_surrogate
-                offset_inputs (str) : list of float
-                    min. data value for each input neuron in regression_surrogate
-                factor_inputs (str) : list of float
-                    max. data value for each input neuron in regression_surrogate
-                offset_outputs (str) : list of float
-                    min. data value for each output neuron in regression_surrogate
-                factor_outputs (str) : list of float
-                    max. data vluae for each output neuron in regression_surrogate
+                    classification_surrogate : keras.engine.sequential.Sequential
+                        trained neural network for predicting the indicator variable.
+                    classification_scaling : dict
+                        scaled_input_bounds (str) : dict
+                            scaled range for each input neuron in classification_surrogate
+                        offset_inputs (str) : list of float
+                            min. data value for each input neuron in classification_surrogate
+                        factor_inputs (str) : list of float
+                            max. data value for each input neuron in classification_surrogate
+                        offset_outputs (str) : list of float
+                            min. data value for each output neuron in classification_surrogate
+                        factor_outputs (str) : list of float
+                            max. data vluae for each output neuron in classification_surrogate
+                    classification_threshold : float
+                        value for which the output of the classification neural net must be at min.
+
+                    regression_surrogate : keras.engine.sequential.Sequential
+                        trained neural network for predicting the cost variable.
+                    regression_scaling : dict
+                        scaled_input_bounds (str) : dict
+                            scaled range for each input neuron in regression_surrogate
+                        offset_inputs (str) : list of float
+                            min. data value for each input neuron in regression_surrogate
+                        factor_inputs (str) : list of float
+                            max. data value for each input neuron in regression_surrogate
+                        offset_outputs (str) : list of float
+                            min. data value for each output neuron in regression_surrogate
+                        factor_outputs (str) : list of float
+                            max. data vluae for each output neuron in regression_surrogate
         Returns:
             None.
         """
