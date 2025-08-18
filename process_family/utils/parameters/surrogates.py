@@ -7,6 +7,7 @@ from onnxmltools.convert.lightgbm.convert import convert
 import onnxmltools as onnxmltools
 from skl2onnx.common.data_types import FloatTensorType
 import lightgbm
+import tensorflow as tf
 
 from process_family.utils.parameters.base import Parameters
 from process_family.utils.trainer.base import BaseTrainer
@@ -20,7 +21,8 @@ class SurrogateParameters(Parameters):
     ]
 
     classification_types = [
-        keras.engine.sequential.Sequential,
+        # keras.engine.sequential.Sequential,
+        tf.keras.models.Sequential,
         onnx.onnx_ml_pb2.ModelProto,
         lineartree.lineartree.LinearTreeRegressor,
         lineartree.lineartree.LinearTreeClassifier,
@@ -34,7 +36,8 @@ class SurrogateParameters(Parameters):
     ]
 
     regression_types = [
-        keras.engine.sequential.Sequential,
+        # keras.engine.sequential.Sequential,
+        tf.keras.models.Sequential,
         onnx.onnx_ml_pb2.ModelProto,
         lineartree.lineartree.LinearTreeRegressor,
         lightgbm.sklearn.LGBMRegressor
