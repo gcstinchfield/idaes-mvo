@@ -40,6 +40,12 @@ except:
     print("No onnx import.")
     onnx = None
 
+try: 
+    import tensorflow as tf
+except:
+    print("No tensorflow import.")
+    tf = None
+
 from process_family.type.base import ProcessFamilyBase
 
 class SurrogatesProcessFamily(ProcessFamilyBase):
@@ -128,7 +134,8 @@ class SurrogatesProcessFamily(ProcessFamilyBase):
         """
 
         # if we have a NN for a classification surrogate, add appropriate omlt block
-        if isinstance(self.classification_surrogate, keras.engine.sequential.Sequential):
+        # if isinstance(self.classification_surrogate, keras.engine.sequential.Sequential):
+        if isinstance(self.classification_surrogate, tf.keras.models.Sequential):
 
             print("\tthe classification surrogate is a neural network.")
 
@@ -163,7 +170,8 @@ class SurrogatesProcessFamily(ProcessFamilyBase):
                 # use big-M to reformulate the trees
                 gbt_reformulation=GBTBigMFormulation(gbt_model)
                 block.build_formulation(gbt_reformulation)
-        
+                print("hey look, I built the thing!")
+
         # if we have a LMDT for a classification surrogate, add appropriate omlt block
         if isinstance(self.classification_surrogate, lineartree.lineartree.LinearTreeRegressor) or \
             isinstance(self.classification_surrogate, lineartree.lineartree.LinearTreeClassifier) or \
@@ -172,22 +180,17 @@ class SurrogatesProcessFamily(ProcessFamilyBase):
             print("\tthe classification surrogate is a linear model decision tree.")            
 
             def indicator_rule(block,*args):
-                print("here (1)")
                 scaler_classification=omlt.OffsetScaling( offset_inputs=self.classification_scaling["offset_inputs"],
                                                           factor_inputs=self.classification_scaling["factor_inputs"],
                                                           offset_outputs=self.classification_scaling["offset_outputs"],
                                                           factor_outputs=self.classification_scaling["factor_outputs"] )
-                print("here (2)")
                 # load the model with appropriate scaling information
                 print(f"{type(self.classification_surrogate) = }")
                 indicator_lmdt=LinearTreeDefinition( lt_regressor=self.classification_surrogate,
                                                      scaling_object = scaler_classification,
                                                      scaled_input_bounds = self.classification_scaling["scaled_input_bounds"] )
                 # transform using ReLUBigM
-                print("here (3)")
                 indicator_lmdt_mip=LinearTreeGDPFormulation(indicator_lmdt)
-                
-                print("here (4)")
                 block.build_formulation(indicator_lmdt_mip)
 
         # add the surrogate with the correct rule, based on type of surrogate
@@ -237,8 +240,9 @@ class SurrogatesProcessFamily(ProcessFamilyBase):
         """
 
         # if we have a NN for a regression surrogate, add appropriate omlt block
-        if isinstance(self.regression_surrogate, keras.engine.sequential.Sequential):
-
+        # if isinstance(self.regression_surrogate, keras.engine.sequential.Sequential):
+        if isinstance(self.regression_surrogate, tf.keras.models.Sequential):
+            
             print("\tthe regression surrogate is a neural network.\n")
 
             def cost_rule(block,*args):
