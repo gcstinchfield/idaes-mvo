@@ -180,38 +180,3 @@ class BaseTrainer:
         fig_hist.savefig(f"{directory}/{self.task}-histogram.png",
                          bbox_inches="tight",
                          dpi=300)
-
-        # plot scatterplot visualization of same data
-        fig_scatter = plt.figure()
-        ax_scatter = fig_scatter.add_subplot()
-
-        ax_scatter.scatter(predictions, labels) 
-        
-        ax_scatter.set_xlabel('Surrogate Output Value')
-        ax_scatter.set_yticks([0, 1])
-
-        ax_scatter.set_ylabel('Actual Label (Success = 1, Fail = 0)')
-
-        ax_scatter.set_title('Surrogate Output Values, Based on Success/Fail Label\n' + self.label)
-
-        # maximum of unsuccessul + minimum successful
-        max_value_unsuccessful = float(max(unsuccessful_simulation))
-        min_value_successful = float(min(successful_simulation))
-
-        ax_scatter.scatter(max_value_unsuccessful, 0, color = 'r', s = 100, label = 'max successful value')
-        ax_scatter.scatter(min_value_successful, 1, color = 'y', s = 100, label = 'min. successful value')
-        
-        offset = 10
-        ax_scatter.annotate( 'max unsuccessful value = %.1f'%(max_value_unsuccessful), 
-                            xy = (max_value_unsuccessful, 0),
-                            xytext = (offset, offset),
-                            textcoords = 'offset points')
-
-        ax_scatter.annotate( 'min successful value = %.1f'%(min_value_successful), 
-                            xy = (min_value_successful, 1),
-                            xytext = (offset, -2*offset),
-                            textcoords = 'offset points')
-        
-        fig_scatter.savefig(f"{directory}/{self.task}-{dataset}-scatter.png",
-                            bbox_inches="tight",
-                            dpi=300)
