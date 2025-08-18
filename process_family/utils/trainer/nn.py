@@ -44,7 +44,7 @@ class NNTrainer(BaseTrainer):
         if self.task=="regression":
             final_layer_activation="linear"
             loss="mean_squared_error"
-            metrics=["mse","mae"]
+            metrics=["mean_squared_error","mae"]
         if self.task=="linear-classification":
             final_layer_activation="linear"
             loss=tf.keras.losses.BinaryCrossentropy(from_logits=True,
@@ -126,32 +126,50 @@ class NNTrainer(BaseTrainer):
             y_val=self.y_val_classification
 
         # add early stopping
-        early_stopping=EarlyStopping(monitor="accuracy",
-                                    mode="max",
-                                    verbose=0,
-                                    patience=100)
+        if self.task=="regression":
+            early_stopping=EarlyStopping(monitor="mean_squared_error",
+                                        mode="max",
+                                        verbose=0,
+                                        patience=100)
+        else:
+            early_stopping=EarlyStopping(monitor="accuracy",
+                                        mode="max",
+                                        verbose=0,
+                                        patience=100)
 
         # if we need to tune hyperparameters of the model
         if hp_tuning:
 
             # init hyperparameter tuner
-            tuner=keras_tuner.Hyperband(
-                hypermodel=self._build_nn,
-                objective="accuracy",
-                max_epochs=5000,
-                hyperband_iterations=5,
-                seed=42,
-                directory=directory,
-                project_name=f"{task}-hp-tuning",
-                overwrite=True
-            )
-
+            if self.task=="regression":
+                tuner=keras_tuner.Hyperband(
+                    hypermodel=self._build_nn,
+                    objective="mean_squared_error",
+                    max_epochs=5000,
+                    hyperband_iterations=5,
+                    seed=42,
+                    directory=directory,
+                    project_name=f"{task}-hp-tuning",
+                    overwrite=True
+                )
+            else:
+                tuner=keras_tuner.Hyperband(
+                    hypermodel=self._build_nn,
+                    objective="accuracy",
+                    max_epochs=5000,
+                    hyperband_iterations=5,
+                    seed=42,
+                    directory=directory,
+                    project_name=f"{task}-hp-tuning",
+                    overwrite=True
+                )
+            
             # tune & search
             tuner.search(x=x_train,
-                        y=y_train,
-                        validation_data=(x_test, y_test),
-                        epochs=100,
-                        callbacks=[early_stopping])
+                         y=y_train,
+                         validation_data=(x_test, y_test),
+                         epochs=100,
+                         callbacks=[early_stopping])
             
             # get the best hyperparameters, build model
             best_hp=tuner.get_best_hyperparameters()[0]
@@ -194,7 +212,7 @@ class NNTrainer(BaseTrainer):
                                 png_pathstring=directory+"/regression-nn-loss.png")
 
                 # plot mean square error
-                self.plot_mse(mse=history.history["mse"],
+                self.plot_mse(mse=history.history["mean_squared_error"],
                                 png_pathstring=directory+"/regression-nn-mse.png")
 
                 # plot mean absolute error
@@ -271,7 +289,9 @@ class NNTrainer(BaseTrainer):
                     bbox_inches="tight",
                     dpi=300)
         
-    def plot_mse(self,mse,png_pathstring):
+    def plot_mse(self,
+                 mse,
+                 png_pathstring):
         """
         plots the mean square error, from the Keras history object
 
