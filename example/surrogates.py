@@ -3,6 +3,8 @@ import numpy as np
 
 from process_family.type.surrogates import SurrogatesProcessFamily
 from process_family.utils.parameters.surrogates import SurrogateParameters
+from process_family.utils.trainer.nn import NNTrainer
+from process_family.utils.trainer.tree import TreeTrainer
 
 if __name__=="__main__":
 
@@ -60,19 +62,19 @@ if __name__=="__main__":
                                             "Compr. Flow (mol./s)"]
     params.make_results_dir("surrogates")
 
-    # grab paths to surrogates
+     # grab paths to surrogates
     cwd = os.getcwd()
-    classification_surrogate = os.path.join(cwd, f"surrogates/classification-nn")
-    regression_surrogate = os.path.join(cwd, f"surrogates/regression-nn")
+    classification_surrogate = os.path.join(cwd, f"surrogates/classification-regression-gbdt")
+    regression_surrogate = os.path.join(cwd, f"surrogates/regression-gbdt")
 
     # add surrogates we want
-    params.add_surrogates(classification_type = "nn",
-                          classification_path = classification_surrogate,
-                          regression_type = "nn",
-                          regression_path = regression_surrogate,
-                          classification_threshold = 0.5)
-    
-    # hack in the output scaling
+    params.add_surrogates(classification_type = "gbdt",
+                        classification_path = classification_surrogate,
+                        regression_type = "gbdt",
+                        regression_path = regression_surrogate,
+                        classification_threshold = 0.99)
+
+    # add in the output scaling
     params.regression_scaling["offset_outputs"] = np.array([0], dtype="float32")
     params.regression_scaling["factor_outputs"] = np.array([1], dtype="float32")
     
