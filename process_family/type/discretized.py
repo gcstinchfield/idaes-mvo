@@ -135,7 +135,7 @@ class DiscretizedProcessFamily(ProcessFamilyBase):
             for a in self.A_v[v]:
 
                 # if x_{v,a}==1, then alternative was selected for this variant
-                if pyo.value(self.model.x_va[v,a] >= 0.98):
+                if pyo.value(self.model.x_va[v,a]) >= 0.98:
 
                     # add to dict
                     sol_dict[v]=a       

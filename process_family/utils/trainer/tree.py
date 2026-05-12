@@ -135,7 +135,7 @@ class TreeTrainer(BaseTrainer):
                     'force_col_wise':True}
         
             # train the model
-            model_gbdt=base_estimator.firt(params=PARAMS,
+            gbdt_model=base_estimator.fit(params=PARAMS,
                                            train_set=training_data)
         
         # predict on testing and validation set
