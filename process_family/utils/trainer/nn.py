@@ -190,9 +190,9 @@ class NNTrainer(BaseTrainer):
                                      patience=50)
 
         # finally, train model using best hyperparameters
-        history=model.fit(x=self.X_train_classification,
-                          y=self.y_train_classification,
-                          validation_data=(self.X_test_classification, self.y_test_classification),
+        history=model.fit(x=x_train,
+                          y=y_train,
+                          validation_data=(x_test, y_test),
                           epochs=5000,
                           callbacks=[early_stopping,csv_logger])
         

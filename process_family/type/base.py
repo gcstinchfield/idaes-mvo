@@ -217,11 +217,6 @@ class ProcessFamilyBase:
         xaxis_ticks=[]
         yaxis_ticks=[]
 
-        # HACK: for the water desalination results that are weird
-        for v in self.V:
-            if round(sol_dict[v][0],2) == 272.61 or round(sol_dict[v][0],2) == 272.6:
-                sol_dict[v][0] = 276.6
-
         # how many different combos of units do we have to plot
         all_combos=[]
         for v in self.V:
