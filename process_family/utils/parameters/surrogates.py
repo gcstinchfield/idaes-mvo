@@ -121,14 +121,14 @@ class SurrogateParameters(Parameters):
         if type=="gbdt":
             try:
                 return onnx.load(path)
-            except:
+            except Exception:
                 pass
             try:
                 # unpickle
                 with open(path, "rb") as file:
                     unpickled_gbdt = pickle.load(file)
-    
-                # convert to onnx model 
+
+                # convert to onnx model
                 print(dir(unpickled_gbdt))
 
                 float_tensor_type = FloatTensorType([None, unpickled_gbdt.n_features_])
@@ -137,7 +137,7 @@ class SurrogateParameters(Parameters):
                                      initial_types=initial_types,
                                      target_opset=8)
                 return onnx_model
-            except:
+            except Exception:
                 pass
             try:
                 # unpickle
@@ -146,12 +146,12 @@ class SurrogateParameters(Parameters):
 
                 float_tensor_type = FloatTensorType([None, unpickled_gbdt.n_features_])
                 initial_types = [('float_input', float_tensor_type)]
-                onnx_model = onnxmltools.convert_lightgbm(unpickled_gbdt, 
+                onnx_model = onnxmltools.convert_lightgbm(unpickled_gbdt,
                                                           initial_types=initial_types)
                 return onnx_model
-            except:
+            except Exception:
                 raise Exception("Could not load GBDT as an ONNX model, LightGBMRegressor, or unpickling.\nPlease check file format and try again.")
-        
+
         if type=="lmdt":
 
             # if the path is really a path, load
@@ -160,29 +160,29 @@ class SurrogateParameters(Parameters):
                     model = onnx.load(path)
                     print(f"loading via ONNX; {model = }")
                     return model
-                except:
+                except Exception:
                     pass
                 try:
                     with open(path, "rb") as file:
                         print("loading via pickle")
                         model = pickle.load(file)
                         return model
-                except:
+                except Exception:
                     raise Exception("Could not load LMDT as an ONNX model or unpickling.\nPlease check file format and try again.")
-            
+
             # otherwise, it should already be a model and we can return directly
             else:
                 model = path
                 return model
-        
+
         if type=="nn":
             try:
                 return onnx.load(path)
-            except:
+            except Exception:
                 pass
             try:
                 return keras.models.load_model(path)
-            except:
+            except Exception:
                 raise Exception("Could not load NN as an ONNX model or via Keras.\nPlease check file format and try again.")
     
     def _check_loaded_models(self):
