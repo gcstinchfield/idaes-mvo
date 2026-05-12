@@ -11,7 +11,7 @@ if __name__=="__main__":
     # initialize parameters
     params = SurrogateParameters("transcritical-co2")
 
-    # init path to csv file with carbon capture data
+    # init path to csv file with transcritical co2 data
     params.csv_filepath=os.path.join(params.cwd,"data/transcritical-co2-data.csv")
 
     # (1) factors defining each process variant (must match with .csv file names)
