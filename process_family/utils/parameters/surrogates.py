@@ -94,22 +94,12 @@ class SurrogateParameters(Parameters):
         """
         self.classification_threshold = classification_threshold
 
-        try:
-            assert classification_type in self.classification_type_kwargs
-        except:
-            print(f"The classification surrogate type, {classification_type}, is not supported.")
-            print("Supported surrogate types include:")
-            for name in self.classification_type_kwargs:
-                print(f"\t- {name}")
-            quit()
-        try:
-            assert regression_type in self.regression_type_kwargs
-        except:
-            print(f"The regression surrogate type, {regression_type}, is not supported.")
-            print("Supported surrogate types include:")
-            for name in self.regression_type_kwargs:
-                print(f"\t- {name}")
-            quit()
+        if classification_type not in self.classification_type_kwargs:
+            supported = ", ".join(self.classification_type_kwargs)
+            raise ValueError(f"Classification surrogate type '{classification_type}' is not supported. Supported types: {supported}")
+        if regression_type not in self.regression_type_kwargs:
+            supported = ", ".join(self.regression_type_kwargs)
+            raise ValueError(f"Regression surrogate type '{regression_type}' is not supported. Supported types: {supported}")
         
         # load and add surrogates
         self.classification_surrogate = self._load_model(type = classification_type,
@@ -201,29 +191,13 @@ class SurrogateParameters(Parameters):
         These are used in building the MILP, to sense which formulation to use.
         """
         
-        # classification
-        try:
-            assert any(isinstance(self.classification_surrogate, classification_type) \
-                    for classification_type in self.classification_types)
-        except:
-            print("None of the classification types were matched.")
-            print(f"Type found: {type(self.classification_surrogate)}")
-            print("Viable types include:")
-            for classification_type in self.classification_types:
-                print(f"\t- {classification_type}")
-            quit()
-        
-        # regression
-        try:
-            assert any(isinstance(self.regression_surrogate, regression_type) \
-                    for regression_type in self.regression_types)
-        except:
-            print("None of the regression types were matched.")
-            print(f"Type found: {type(self.regression_surrogate)}")
-            print("Viable types include:")
-            for regression_type in self.regression_types:
-                print(f"\t- {regression_type}")
-            quit()
+        if not any(isinstance(self.classification_surrogate, t) for t in self.classification_types):
+            viable = ", ".join(str(t) for t in self.classification_types)
+            raise TypeError(f"Classification surrogate type {type(self.classification_surrogate)} not supported. Viable types: {viable}")
+
+        if not any(isinstance(self.regression_surrogate, t) for t in self.regression_types):
+            viable = ", ".join(str(t) for t in self.regression_types)
+            raise TypeError(f"Regression surrogate type {type(self.regression_surrogate)} not supported. Viable types: {viable}")
 
     def _get_scaling_info(self): 
         """
@@ -244,11 +218,9 @@ class SurrogateParameters(Parameters):
                 Displays the adjusted keras model overview.
                 Optional, default is false.
         """
-        try:
-            assert hasattr(self, "classification_surrogate")
-            assert isinstance(self.classification_surrogate, keras.engine.sequential.Sequential)
-        except:
-            print("linearize_log_term() is intended for use with an instantiated classification surrogate, type NN, activated by a sigmoid.")
+        if not hasattr(self, "classification_surrogate") or \
+                not isinstance(self.classification_surrogate, tf.keras.models.Sequential):
+            raise TypeError("linearize_logistic() requires an instantiated classification surrogate of type NN (tf.keras.models.Sequential) with a sigmoid activation.")
 
         # change sigmoid output layer activation to linear
         self.classification_surrogate.layers[-1].activation = keras.activations.linear
