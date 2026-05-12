@@ -321,15 +321,15 @@ class ProcessFamilyBase:
                      "Discretized-EON"]
         assert pfd_solution_method in sol_methods
         
-        # check if this has a file name and create plot_pathstring
+        if directory is None:
+            return
+
         if directory[-4:]==".txt":
             csv_pathstring=directory
         else:
             csv_pathstring=directory+"opt-results.txt"
-            
-        # if saving results, open file.
-        if csv_pathstring!=None:
-            results_file=open(csv_pathstring, 'w')
+
+        with open(csv_pathstring, 'w') as results_file:
 
             results_file.write("--------------------------------------------------------------------------------------\n")
             results_file.write(" Process Family Design Results: " + pfd_solution_method + "\n")
@@ -343,13 +343,13 @@ class ProcessFamilyBase:
             # add total annualzied cost (objective)
             results_file.write( str('Total Annualized Cost (i.e. objective) = ' + str(pyo.value(self.model.obj)) + '\n'))
             results_file.write("--------------------------------------------------------------------------------------\n")
-            
+
             # add solver information
             results_file.write("Optimization Statistics: \n")
             results_file.write("\tTermination condition: " + str(self.results.solver.termination_condition) + "\n")
             results_file.write("\tSolver status: " + str(self.results.solver.status) + "\n")
             results_file.write("--------------------------------------------------------------------------------------\n")
-            
+
             # add the parameters for N_c
             results_file.write( "Max num. of each common unit type allowed in platform:\n" )
             if pfd_solution_method=="Surrogates":
@@ -367,7 +367,7 @@ class ProcessFamilyBase:
                 results_file.write( '\n\tVariant :\n' )
                 for i_index, i_name in enumerate(self.process_variant_columns):
                     results_file.write( str('\t\t' + str(i_name) + '=' + str(infeasible_variant[i_index]) + '\n') )
-            
+
             results_file.write("--------------------------------------------------------------------------------------\n")
 
             if pfd_solution_method=="Discretized-EON":
@@ -375,11 +375,10 @@ class ProcessFamilyBase:
                 results_file.write( "\talpha (market elasticity) = " +str(self.alpha) + "\n" )
                 results_file.write( "\tDF_max (largest achievable discount) = " +str(self.DF_max) + "\n" )
                 results_file.write("--------------------------------------------------------------------------------------\n")
-            
+
             results_file.write('\nThe assignments of alternatives to variants are:\n')
             for v in sol_dict:
 
-                # display value if indicated
                 if show:
                     print('\nVariant:')
                     for v_index, v_name in enumerate(self.process_variant_columns):
@@ -387,15 +386,13 @@ class ProcessFamilyBase:
                     print('Common Unit Module Designs Selected:')
                     for design_index, design_name in enumerate(self.C):
                         print('\t', design_name, '=', sol_dict[v][design_index])
-                
-                # save results if indicated
-                if csv_pathstring!=None:
-                    results_file.write( '\nVariant :\n' )
-                    for v_index, v_name in enumerate(self.process_variant_columns):
-                        results_file.write( str('\t' + str(v_name) + '=' + str(v[v_index]) + '\n') )
-                    results_file.write( 'Common Unit Module Designs Selected:\n' )
-                    for a_index, a_name in enumerate(self.C):
-                        results_file.write( str('\t' + str(a_name) + '=' + str(sol_dict[v][a_index]) + '\n') )
+
+                results_file.write( '\nVariant :\n' )
+                for v_index, v_name in enumerate(self.process_variant_columns):
+                    results_file.write( str('\t' + str(v_name) + '=' + str(v[v_index]) + '\n') )
+                results_file.write( 'Common Unit Module Designs Selected:\n' )
+                for a_index, a_name in enumerate(self.C):
+                    results_file.write( str('\t' + str(a_name) + '=' + str(sol_dict[v][a_index]) + '\n') )
 
     def _individual_unit_design_costs(self):
         """
@@ -570,15 +567,15 @@ class ProcessFamilyBase:
                                                 DF_max=DF_max,
                                                 manufactured_unit_designs=manufactured_unit_designs)
         
-        # check if this has a file name and create plot_pathstring
+        if directory is None:
+            return
+
         if directory[-4:]==".txt":
             csv_pathstring=directory
         else:
             csv_pathstring=directory+"opt-eon-results.txt"
-            
-        # if saving results, open file.
-        if csv_pathstring!=None:
-            results_file=open(csv_pathstring, 'w')
+
+        with open(csv_pathstring, 'w') as results_file:
 
             results_file.write("--------------------------------------------------------------------------------------\n")
             results_file.write(" Process Family Design: " + pfd_solution_method + "\n")
