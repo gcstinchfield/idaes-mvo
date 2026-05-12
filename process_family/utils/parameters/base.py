@@ -217,13 +217,8 @@ class Parameters():
         # set up results directory
         cwd=os.getcwd()
         base_results_dir = os.path.join(cwd,f"results/{self.system_name}/")
-        BaseExists = os.path.exists(base_results_dir)
-        if not BaseExists:
-            os.mkdir(base_results_dir)
         results_dir=os.path.join(base_results_dir,f"{method}")
-        isExist = os.path.exists(results_dir)
-        if not isExist:
-            os.mkdir(results_dir)
+        os.makedirs(results_dir, exist_ok=True)
 
         # add attributes
         self.base_results_dir = base_results_dir
